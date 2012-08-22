@@ -1,0 +1,12 @@
+10.0
+10
+1       SQLNCHAR            0       180     ";\0"        4     ACTION_TYPE                                      Latin1_General_CI_AS
+2       SQLNCHAR            0       180     ";\0"        3     CASE_ACCOUNTABILITY_ID                           Latin1_General_CI_AS
+3       SQLNCHAR            0       60      ";\0"        6     DATE_MODIFIED                                    ""
+4       SQLNCHAR            0       240     ";\0"        10    DELIVERY_ALTERNATIVE                             Latin1_General_CI_AS
+5       SQLNCHAR            0       60      ";\0"        5     OPEN_DATE                                        ""
+6       SQLNCHAR            0       480     ";\0"        9     PARTNER_CO_NAME                                  Latin1_General_CI_AS
+7       SQLNCHAR            0       180     ";\0"        1     SUBCASE_ID                                       Latin1_General_CI_AS
+8       SQLNCHAR            0       180     ";\0"        2     SUBCASE_TRACKING_ID                              Latin1_General_CI_AS
+9       SQLNCHAR            0       120     ";\0"        8     X_OTC                                            Latin1_General_CI_AS
+10      SQLNCHAR            0       12      "\r\0\n\0"   7     X_REPAIR_CLASS                                   Latin1_General_CI_AS

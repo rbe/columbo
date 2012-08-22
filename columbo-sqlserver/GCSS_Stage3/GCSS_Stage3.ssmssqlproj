@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="GCSS_Stage3">
+  <Items>
+    <LogicalFolder Name="Verbindungen" Type="2" Sorted="true">
+      <Items />
+    </LogicalFolder>
+    <LogicalFolder Name="Abfragen" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Claims_1.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Claims_1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Claims_2.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Claims_2.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Claims_3.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Claims_3.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Big.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Big.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_CASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_CASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_HP_OFFER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_HP_OFFER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_HP_PART_ORDER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_HP_PART_ORDER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_HP_PARTS_INFO_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_HP_PARTS_INFO_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_HP_SV_DLVR_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_HP_SV_DLVR_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_ONSITE_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_ONSITE_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_SUBCASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_SUBCASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_WFM_CASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_WFM_CASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Partition_WFM_SUBCASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Partition_WFM_SUBCASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Index_HP_COUNTRY_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Index_HP_COUNTRY_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Test_Big.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Test_Big.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Views_x.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Views_x.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Sonstiges" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

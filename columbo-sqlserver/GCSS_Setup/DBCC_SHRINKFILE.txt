@@ -1,0 +1,8 @@
+USE [GCSS]
+GO
+create unique clustered index merge_desc_pk on gcss.merge_desc (id) with (drop_existing=on) on [primary]
+GO
+DBCC SHRINKFILE (N'tempdev22' , EMPTYFILE)
+GO
+ALTER DATABASE [GCSS]  REMOVE FILE [tempdev24]
+GO

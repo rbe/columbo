@@ -1,0 +1,9 @@
+10.0
+7
+1       SQLNCHAR            0       180     ";\0"        2     ACCOUNTABILITY_ID                      Latin1_General_CI_AS
+2       SQLNCHAR            0       180     ";\0"        3     CASE_ID                                Latin1_General_CI_AS
+3       SQLNCHAR            0       60      ";\0"        6     DATE_MODIFIED                          ""
+4       SQLNCHAR            0       82      ";\0"        5     EMPLOYEE_TABLE_ID                      ""
+5       SQLNCHAR            0       8000    ";\0"        7     NOTES                                  Latin1_General_CI_AS
+6       SQLNCHAR            0       82      ";\0"        1     ONSITE_LOG_ID                          ""
+7       SQLNCHAR            0       180     "\r\0\n\0"   8     PERF_BY                                Latin1_General_CI_AS

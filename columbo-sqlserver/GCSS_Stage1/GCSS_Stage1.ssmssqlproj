@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="GCSS_Stage1">
+  <Items>
+    <LogicalFolder Name="Verbindungen" Type="2" Sorted="true">
+      <Items />
+    </LogicalFolder>
+    <LogicalFolder Name="Abfragen" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Procedure_Create_CASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_CASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_EMPLOYEE_TABLE_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_EMPLOYEE_TABLE_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_HP_COUNTRY_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_HP_COUNTRY_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_HP_OFFER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_HP_OFFER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_HP_PARTS_INFO_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_HP_PARTS_INFO_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_HP_PART_ORDER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_HP_PART_ORDER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_HP_SV_DLVR_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_HP_SV_DLVR_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_NOTES_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_NOTES_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_ONSITE_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_ONSITE_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_PHONE_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_PHONE_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_SUBCASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_SUBCASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_WFM_CASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_WFM_CASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_Create_WFM_SUBCASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_Create_WFM_SUBCASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_CASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_CASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_EMPLOYEE_TABLE_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_EMPLOYEE_TABLE_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_HP_COUNTRY_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_HP_COUNTRY_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_HP_OFFER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_HP_OFFER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_HP_PARTS_INFO_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_HP_PARTS_INFO_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_HP_PART_ORDER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_HP_PART_ORDER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_ONSITE_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_ONSITE_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_SUBCASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_SUBCASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_WFM_CASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_WFM_CASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_WFM_SUBCASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_WFM_SUBCASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Example_RunStage1.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Example_RunStage1.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_LOAD_HP_SV_DLVR_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_LOAD_HP_SV_DLVR_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_MERGE_DESC.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_MERGE_DESC.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_DROP_TEMP_TABLE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_DROP_TEMP_TABLE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_CREATE_TABLE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_CREATE_TABLE.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Sonstiges" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

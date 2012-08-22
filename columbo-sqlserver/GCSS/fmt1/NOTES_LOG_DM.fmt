@@ -1,0 +1,12 @@
+10.0
+10
+1       SQLNCHAR            0       180     ";\0"        1     ACCOUNTABILITY_ID                      Latin1_General_CI_AS
+2       SQLNCHAR            0       22      ";\0"        2     CREATE_DATE                            ""
+3       SQLNCHAR            0       240     ";\0"        3     ACTION_TYPE                            Latin1_General_CI_AS
+4       SQLNCHAR            0       82      ";\0"        4     EMPLOYEE_ID                            ""
+5       SQLNCHAR            0       180     ";\0"        5     CASE_ID                                Latin1_General_CI_AS
+6       SQLNCHAR            0       60      ";\0"        6     CASE_SUBCASE                           Latin1_General_CI_AS
+7       SQLNCHAR            0       480     ";\0"        7     WORK_GROUP                             Latin1_General_CI_AS
+8       SQLNCHAR            0       1530    ";\0"        8     INTERNAL                               Latin1_General_CI_AS
+9       SQLNCHAR            0       8000    ";\0"        9     NOTES                                  Latin1_General_CI_AS
+10      SQLNCHAR            0       82      "\r\0\n\0"   10    NOTES_LOG_ID                           ""

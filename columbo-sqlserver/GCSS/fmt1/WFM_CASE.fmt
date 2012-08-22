@@ -1,0 +1,7 @@
+10.0
+5
+1       SQLNCHAR            0       180     ";\0"        1     ACCOUNTABILITY_ID                      Latin1_General_CI_AS
+2       SQLNCHAR            0       180     ";\0"        2     CASE_ID                                Latin1_General_CI_AS
+3       SQLNCHAR            0       480     ";\0"        3     CUSTOMER_SITE_ID                       Latin1_General_CI_AS
+4       SQLNCHAR            0       60      ";\0"        4     DATE_MODIFIED                          ""
+5       SQLNCHAR            0       82      "\r\0\n\0"   5     SELECTED_OFFER_ID                      ""

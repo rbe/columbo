@@ -1,0 +1,6 @@
+10.0
+4
+1       SQLNCHAR            0       82      ";\0"        1     COUNTRY_ID                       ""
+2       SQLNCHAR            0       82      ";\0"        2     COUNTRY_CODE                     ""
+3       SQLNCHAR            0       24      ";\0"        4     X_SUPER_REGION                   Latin1_General_CI_AS
+4       SQLNCHAR            0       240     "\r\0\n\0"   5     NAME                             Latin1_General_CI_AS

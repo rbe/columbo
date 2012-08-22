@@ -1,0 +1,20 @@
+10.0
+18
+1       SQLNCHAR            0       180     ";\0"        1     ACCOUNTABILITY_ID                                  Latin1_General_CI_AS
+2       SQLNCHAR            0       180     ";\0"        18    CASE_ID                                            Latin1_General_CI_AS
+3       SQLNCHAR            0       60      ";\0"        8     CURRENCY                                           Latin1_General_CI_AS
+4       SQLNCHAR            0       60      ";\0"        11    DATE_MODIFIED                                      ""
+5       SQLNCHAR            0       82      ";\0"        19    HP_PART_ORDER_ID                                   ""
+6       SQLNCHAR            0       82      ";\0"        9     LIST_PRICE                                         ""
+7       SQLNCHAR            0       96      ";\0"        4     ORDER_NUMBER                                       Latin1_General_CI_AS
+8       SQLNCHAR            0       82      ";\0"        3     PARTS_INFO_ID                                      ""
+9       SQLNCHAR            0       960     ";\0"        7     PART_DESC                                          Latin1_General_CI_AS
+10      SQLNCHAR            0       240     ";\0"        6     PART_NUMBER                                        Latin1_General_CI_AS
+11      SQLNCHAR            0       82      ";\0"        5     SELECTED_QUANTITY                                  ""
+12      SQLNCHAR            0       240     ";\0"        10    SOURCE_LOCATION                                    Latin1_General_CI_AS
+13      SQLNCHAR            0       180     ";\0"        2     SUBCASE_TRACKING_ID                                Latin1_General_CI_AS
+14      SQLNCHAR            0       24      ";\0"        12    X_FAILURE_CD                                       Latin1_General_CI_AS
+15      SQLNCHAR            0       82      ";\0"        17    X_LOGISTICS_LINE_NUMBER                            ""
+16      SQLNCHAR            0       120     ";\0"        14    X_PART_STATUS                                      Latin1_General_CI_AS
+17      SQLNCHAR            0       108     ";\0"        15    X_PART_USAGE                                       Latin1_General_CI_AS
+18      SQLNCHAR            0       6       "\r\0\n\0"   20    X_RETURNABLE_CD                                    Latin1_General_CI_AS

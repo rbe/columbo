@@ -1,0 +1,24 @@
+10.0
+22
+1       SQLNCHAR            0       180     ";\0"        3     CASE_ID                                            Latin1_General_CI_AS
+2       SQLNCHAR            0       60      ";\0"        19    DATE_MODIFIED                                      ""
+3       SQLNCHAR            0       82      ";\0"        1     HP_PART_ORDER_ID                                   ""
+4       SQLNCHAR            0       480     ";\0"        22    HP_PART_ORDER_REASON                               Latin1_General_CI_AS
+5       SQLNCHAR            0       180     ";\0"        2     SUBCASE_ID                                         Latin1_General_CI_AS
+6       SQLNCHAR            0       480     ";\0"        13    X_COMPANY_NAME                                     Latin1_General_CI_AS
+7       SQLNCHAR            0       150     ";\0"        15    X_CONTACT_ALT_PHONE                                Latin1_General_CI_AS
+8       SQLNCHAR            0       120     ";\0"        21    X_CONTACT_FAX_NUMBER                               Latin1_General_CI_AS
+9       SQLNCHAR            0       180     ";\0"        16    X_CONTACT_FIRST_NAME                               Latin1_General_CI_AS
+10      SQLNCHAR            0       180     ";\0"        17    X_CONTACT_LAST_NAME                                Latin1_General_CI_AS
+11      SQLNCHAR            0       150     ";\0"        18    X_CONTACT_PHONE                                    Latin1_General_CI_AS
+12      SQLNCHAR            0       120     ";\0"        14    X_LOGISTICS_SYSTEM                                 Latin1_General_CI_AS
+13      SQLNCHAR            0       240     ";\0"        5     X_ORDER_ID                                         Latin1_General_CI_AS
+14      SQLNCHAR            0       240     ";\0"        6     X_ORDER_NUMBER                                     Latin1_General_CI_AS
+15      SQLNCHAR            0       0       ";\0"        0     X_SERVICE_NOTE_NUMBER                              Latin1_General_CI_AS
+16      SQLNCHAR            0       1200    ";\0"        7     X_SHIP_ADDRESS                                     Latin1_General_CI_AS
+17      SQLNCHAR            0       1200    ";\0"        8     X_SHIP_ADDRESS2                                    Latin1_General_CI_AS
+18      SQLNCHAR            0       180     ";\0"        9     X_SHIP_CITY                                        Latin1_General_CI_AS
+19      SQLNCHAR            0       240     ";\0"        10    X_SHIP_COUNTRY                                     Latin1_General_CI_AS
+20      SQLNCHAR            0       12      ";\0"        20    X_SHIP_ISO_COUNTRY_CODE                            Latin1_General_CI_AS
+21      SQLNCHAR            0       240     ";\0"        11    X_SHIP_STATE                                       Latin1_General_CI_AS
+22      SQLNCHAR            0       120     "\r\0\n\0"   12    X_SHIP_ZIPCODE                                     Latin1_General_CI_AS

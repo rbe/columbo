@@ -1,0 +1,260 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- -->
+    <name>grownloader</name>
+    <groupId>eu.artofcoding.grownloader</groupId>
+    <artifactId>grownloader</artifactId>
+    <version>3.0.0</version>
+    <!-- Packaging -->
+    <packaging>bundle</packaging>
+    <!--
+
+        Properties.
+
+    -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Maven -->
+        <project.maven-compiler-plugin.version>2.3.2</project.maven-compiler-plugin.version>
+        <project.maven-resources-plugin.version>2.5</project.maven-resources-plugin.version>
+        <project.build-helper-maven-plugin.version>1.5</project.build-helper-maven-plugin.version>
+        <project.groovy-eclipse-compiler.version>2.6.0-01</project.groovy-eclipse-compiler.version>
+        <!-- Java -->
+        <project.java.version>1.6</project.java.version>
+        <!-- Groovy -->
+        <project.groovy.version>1.8.6</project.groovy.version>
+        <!-- Testing -->
+        <project.junit.version>4.10</project.junit.version>
+        <!-- Logging -->
+        <project.slf4j.version>1.6.4</project.slf4j.version>
+        <project.logback.version>1.0.3</project.logback.version>
+        <!-- OSGi -->
+        <project.osgi-core.version>4.2.0</project.osgi-core.version>
+        <project.osgi-compendium.version>4.2.0</project.osgi-compendium.version>
+        <project.maven-bundle-plugin.version>2.3.7</project.maven-bundle-plugin.version>
+        <!-- JDBC -->
+        <project.hsqldb.driver.version>1.8.0.10</project.hsqldb.driver.version>
+        <project.mysql.driver.version>5.1.19</project.mysql.driver.version>
+        <project.oracle.driver.version>11.2.0.3.0</project.oracle.driver.version>
+        <project.sqlserver.driver.version>4.0</project.sqlserver.driver.version>
+    </properties>
+    <!--
+
+        Dependencies.
+
+    -->
+    <dependencies>
+        <!-- OSGi -->
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+            <version>${project.osgi-core.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.compendium</artifactId>
+            <version>${project.osgi-compendium.version}</version>
+            <scope>provided</scope>
+            <optional>true</optional>
+        </dependency>
+        <!-- Groovy -->
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>${project.groovy.version}</version>
+        </dependency>
+        <!-- JUnit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${project.junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Logging: slf4j and logback -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${project.slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${project.logback.version}</version>
+        </dependency>
+        <!-- JDBC driver for MySQL -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${project.mysql.driver.version}</version>
+        </dependency>
+        <!-- JDBC driver for Oracle -->
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>${project.oracle.driver.version}</version>
+        </dependency>
+        <!-- JDBC driver for SQL Server -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>${project.sqlserver.driver.version}</version>
+        </dependency>
+    </dependencies>
+    <!--
+
+        Build
+
+    -->
+    <build>
+        <sourceDirectory>src/main/groovy</sourceDirectory>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <!-- Plugins -->
+        <plugins>
+            <!-- maven-compiler-plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${project.maven-compiler-plugin.version}</version>
+                <configuration>
+                    <compilerId>groovy-eclipse-compiler</compilerId>
+                    <verbose>true</verbose>
+                    <showDeprecation>true</showDeprecation>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
+                </configuration>
+                <!-- groovy-eclipse-compiler -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.groovy</groupId>
+                        <artifactId>groovy-eclipse-compiler</artifactId>
+                        <version>${project.groovy-eclipse-compiler.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- build-helper-maven-plugin -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>${project.build-helper-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/main/groovy</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>add-test-source</id>
+                        <phase>generate-test-sources</phase>
+                        <goals>
+                            <goal>add-test-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/test/groovy</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- exec-maven-plugin -->
+            <!--
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>eu.artofcoding.gronwloader.Grownloader</mainClass>
+                    <arguments>
+                        <argument>argument1</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            -->
+            <!-- maven-bundle-plugin -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>${project.maven-bundle-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Import-Package>
+                            org.codehaus.groovy.reflection,
+                            org.codehaus.groovy.runtime,
+                            org.codehaus.groovy.runtime.callsite,
+                            org.codehaus.groovy.runtime.typehandling,
+                            org.codehaus.groovy.runtime.wrappers,
+                            groovy.lang,
+                            groovy.util,
+                            groovy.sql,
+                            org.osgi.framework,
+                            org.slf4j
+                        </Import-Package>
+                        <DynamicImport-Package>*</DynamicImport-Package>
+                        <Export-Package>eu.artofcoding.gronwloader</Export-Package>
+                        <Bundle-Activator>eu.artofcoding.gronwloader.GrundleActivator</Bundle-Activator>
+                        <Bundle-Description>art of coding's Grownloader</Bundle-Description>
+                        <Implementation-Vendor>art of coding, http://www.art-of-coding.eu</Implementation-Vendor>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <!--
+        Maven Environment.
+    -->
+    <!-- Repositories. -->
+    <repositories>
+        <!-- art of coding's Public Maven Repository (local) -->
+        <repository>
+            <id>public.maven.repository</id>
+            <name>Public Local Repository</name>
+            <url>file:../../public.maven.repository/</url>
+        </repository>
+        <!-- art of coding's Public Maven Repository
+        <repository>
+            <id>aoc.public.maven.repository</id>
+            <name>art of coding's public.maven.repository on GitHub</name>
+            <url>https://raw.github.com/artofcoding/public.maven.repository/master</url>
+            <layout>default</layout>
+        </repository>
+        -->
+        <!-- java.net -->
+        <repository>
+            <id>java.net</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+        <!-- JBoss -->
+        <repository>
+            <id>repository.jboss.org</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        </repository>
+    </repositories>
+    <!-- Distribution Management. -->
+    <distributionManagement>
+        <!-- art of coding's Public Maven Repository (local) -->
+        <repository>
+            <id>public.maven.repository</id>
+            <name>Public Local Repository</name>
+            <url>file:../../public.maven.repository/</url>
+        </repository>
+    </distributionManagement>
+</project>

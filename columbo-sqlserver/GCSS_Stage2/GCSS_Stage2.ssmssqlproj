@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="GCSS_Stage2">
+  <Items>
+    <LogicalFolder Name="Verbindungen" Type="2" Sorted="true">
+      <Items />
+    </LogicalFolder>
+    <LogicalFolder Name="Abfragen" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Create_CASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_CASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_EMPLOYEE_TABLE_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_EMPLOYEE_TABLE_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_HP_COUNTRY_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_HP_COUNTRY_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_HP_OFFER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_HP_OFFER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_HP_PARTS_INFO_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_HP_PARTS_INFO_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_HP_PART_ORDER_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_HP_PART_ORDER_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_HP_SV_SLVR_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_HP_SV_SLVR_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_NOTES_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_NOTES_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_ONSITE_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_ONSITE_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_PHONE_LOG_DM.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_PHONE_LOG_DM.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_SUBCASE_END2END.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_SUBCASE_END2END.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_WFM_CASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_WFM_CASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_WFM_SUBCASE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_WFM_SUBCASE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_MERGE.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_MERGE.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Procedure_MERGE_ALL.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Procedure_MERGE_ALL.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Sonstiges" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

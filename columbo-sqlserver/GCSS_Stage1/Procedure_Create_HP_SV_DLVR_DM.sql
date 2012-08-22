@@ -1,0 +1,49 @@
+USE GCSS
+GO
+
+/*
+ * Create a table.
+ */
+IF OBJECT_ID('stage1.p_create_hp_sv_dlvr_dm', 'P') IS NOT NULL 
+    DROP PROCEDURE stage1.p_create_hp_sv_dlvr_dm
+GO
+CREATE PROCEDURE stage1.p_create_hp_sv_dlvr_dm(
+	@schema_name   NVARCHAR(255) = 'stage1'
+	, @table_name  NVARCHAR(255)
+)
+AS
+BEGIN
+	-- No row count
+	SET NOCOUNT ON
+	-- Rollback running transactions automatically in case of failure
+	SET XACT_ABORT ON
+	-- Create table
+	EXEC stage1.p_create_table @schema_name = @schema_name, @table_name = @table_name, @table_def = ' (
+		  HP_SV_DLVR_ID NUMERIC(10, 0) NOT NULL 
+		, CASE_ID NVARCHAR(90) NOT NULL 
+		, SUBCASE_ID NVARCHAR(90) 
+		, X_SERVICE_LOCATION NVARCHAR(240)
+		, X_ADDRESS NVARCHAR(600) 
+		, X_ADDRESS_2 NVARCHAR(600) 
+		, X_CITY NVARCHAR(90) 
+		, X_STATE NVARCHAR(120) 
+		, X_ZIPCODE NVARCHAR(60) 
+		, X_ISO_COUNTRY_CODE NVARCHAR(6) 
+		, X_CONTACT_PHONE NVARCHAR(75) 
+		, ENGINEER_FIRST_NAME NVARCHAR(90) 
+		, ENGINEER_LAST_NAME NVARCHAR(90) 
+		, DATE_MODIFIED DATETIME2 
+		, X_CONTACT_FIRST_NAME NVARCHAR(90) 
+		, X_CONTACT_LAST_NAME NVARCHAR(90) 
+		, X_CONTACT_ALT_PHONE NVARCHAR(75) 
+		, X_CONTACT_EMAIL NVARCHAR(240) 
+		, X_CONTACT_PREF_LANG NVARCHAR(60) 
+		, X_ALT_CONTACT_FIRST_NAME NVARCHAR(90) 
+		, X_ALT_CONTACT_LAST_NAME NVARCHAR(90) 
+		, X_ALT_CONTACT_PHONE NVARCHAR(75) 
+		, X_ALT_CONTACT_ALT_PHONE NVARCHAR(75) 
+		, X_ALT_CONTACT_EMAIL NVARCHAR(240) 
+		, X_ALT_CONTACT_PREF_LANG NVARCHAR(60)
+	)'
+END
+GO

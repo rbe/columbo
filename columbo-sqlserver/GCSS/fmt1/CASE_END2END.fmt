@@ -1,0 +1,34 @@
+10.0
+32
+1       SQLNCHAR            0       180     ";\0"        2     ACCOUNTABILITY_ID                            Latin1_General_CI_AS
+2       SQLNCHAR            0       1200    ";\0"        8     ADDRESS                                      Latin1_General_CI_AS
+3       SQLNCHAR            0       1200    ";\0"        9     ADDRESS2                                     Latin1_General_CI_AS
+4       SQLNCHAR            0       180     ";\0"        15    CALLER_PHONE                                 Latin1_General_CI_AS
+5       SQLNCHAR            0       480     ";\0"        3     CALL_TYPE                                    Latin1_General_CI_AS
+6       SQLNCHAR            0       180     ";\0"        1     CASE_ID                                      Latin1_General_CI_AS
+7       SQLNCHAR            0       480     ";\0"        4     CASE_TITLE                                   Latin1_General_CI_AS
+8       SQLNCHAR            0       240     ";\0"        11    CITY                                         Latin1_General_CI_AS
+9       SQLNCHAR            0       0       ";\0"        0     CL_LOGIN_NAME                                Latin1_General_CI_AS
+10      SQLNCHAR            0       180     ";\0"        5     CONDITION_CODE_VALUE                         Latin1_General_CI_AS
+11      SQLNCHAR            0       480     ";\0"        16    CONTACT_E_MAIL                               Latin1_General_CI_AS
+12      SQLNCHAR            0       180     ";\0"        13    CONTACT_FIRST_NAME                           Latin1_General_CI_AS
+13      SQLNCHAR            0       180     ";\0"        14    CONTACT_LAST_NAME                            Latin1_General_CI_AS
+14      SQLNCHAR            0       240     ";\0"        12    COUNTRY                                      Latin1_General_CI_AS
+15      SQLNCHAR            0       60      ";\0"        28    CR_DATE_CUST                                 ""
+16      SQLNCHAR            0       240     ";\0"        29    CR_LOGIN_NAME                                Latin1_General_CI_AS
+17      SQLNCHAR            0       240     ";\0"        31    CR_RESPONSE_CENTER                           Latin1_General_CI_AS
+18      SQLNCHAR            0       480     ";\0"        30    CR_WORK_GROUP                                Latin1_General_CI_AS
+19      SQLNCHAR            0       60      ";\0"        35    DATE_MODIFIED                                ""
+20      SQLNCHAR            0       240     ";\0"        38    DELIVERY_ALTERNATIVE                         Latin1_General_CI_AS
+21      SQLNCHAR            0       76      ";\0"        36    EMPLOYEE_OWNER                               ""
+22      SQLNCHAR            0       240     ";\0"        37    ENTRY_POINT                                  Latin1_General_CI_AS
+23      SQLNCHAR            0       480     ";\0"        7     NAME                                         Latin1_General_CI_AS
+24      SQLNCHAR            0       240     ";\0"        32    OW_LOGIN_NAME                                Latin1_General_CI_AS
+25      SQLNCHAR            0       240     ";\0"        33    OW_RESPONSE_CENTER                           Latin1_General_CI_AS
+26      SQLNCHAR            0       180     ";\0"        18    PRODUCT                                      Latin1_General_CI_AS
+27      SQLNCHAR            0       1530    ";\0"        19    PRODUCT_DESCRIPTION                          Latin1_General_CI_AS
+28      SQLNCHAR            0       240     ";\0"        17    PRODUCT_FAMILY                               Latin1_General_CI_AS
+29      SQLNCHAR            0       180     ";\0"        20    PRODUCT_LINE                                 Latin1_General_CI_AS
+30      SQLNCHAR            0       180     ";\0"        21    SERIAL_NUMBER                                Latin1_General_CI_AS
+31      SQLNCHAR            0       120     ";\0"        22    SERVICE_NOTE_NUMBER                          Latin1_General_CI_AS
+32      SQLNCHAR            0       180     "\r\0\n\0"   10    ZIP_CODE                                     Latin1_General_CI_AS

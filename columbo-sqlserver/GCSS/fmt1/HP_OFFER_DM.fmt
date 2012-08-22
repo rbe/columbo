@@ -1,0 +1,7 @@
+10.0
+5
+1       SQLNCHAR            0       60      ";\0"        5     DATE_MODIFIED                  ""
+2       SQLNCHAR            0       60      ";\0"        2     END_DATE                       ""
+3       SQLNCHAR            0       82      ";\0"        1     OFFER_ID                       ""
+4       SQLNCHAR            0       82      ";\0"        3     OFFER_REF_ID                   ""
+5       SQLNCHAR            0       60      "\r\0\n\0"   4     START_DATE                     ""

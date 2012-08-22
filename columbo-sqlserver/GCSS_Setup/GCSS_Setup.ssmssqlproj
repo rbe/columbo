@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="GCSS_Setup">
+  <Items>
+    <LogicalFolder Name="Verbindungen" Type="2" Sorted="true">
+      <Items />
+    </LogicalFolder>
+    <LogicalFolder Name="Abfragen" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="CreateDB.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>CreateDB.sql</FullPath>
+        </FileNode>
+        <FileNode Name="CreateSchema.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>CreateSchema.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Create_V_PART.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Create_V_PART.sql</FullPath>
+        </FileNode>
+        <FileNode Name="DataLength.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>DataLength.sql</FullPath>
+        </FileNode>
+        <FileNode Name="HelperFunctions.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>HelperFunctions.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ManagePartitions.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ManagePartitions.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ALT_PartitionFunction.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ALT_PartitionFunction.sql</FullPath>
+        </FileNode>
+        <FileNode Name="PartitionFunctionTest.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>PartitionFunctionTest.sql</FullPath>
+        </FileNode>
+        <FileNode Name="PartitionFunctionTest2.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>PartitionFunctionTest2.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Rights.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Rights.sql</FullPath>
+        </FileNode>
+        <FileNode Name="MapNetworkDrive.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>MapNetworkDrive.sql</FullPath>
+        </FileNode>
+        <FileNode Name="ChangeOwner.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>ChangeOwner.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SQLServerMemory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>SQLServerMemory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="SysTypes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>SysTypes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="TableSize.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>TableSize.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Tempdb_AddFile.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Tempdb_AddFile.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Test_ManagePartitions.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Test_ManagePartitions.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Sonstiges" Type="3" Sorted="true">
+      <Items />
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

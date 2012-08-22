@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "GCSS_Setup", "GCSS_Setup\GCSS_Setup.ssmssqlproj", "{36276ADF-3BD2-4835-A6C8-B17AF9EF8783}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "GCSS_Stage1", "GCSS_Stage1\GCSS_Stage1.ssmssqlproj", "{C806E7A5-C951-4674-8B58-79D41D81BBD8}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "GCSS_Stage2", "GCSS_Stage2\GCSS_Stage2.ssmssqlproj", "{6298DBA5-1F83-40D4-B69B-E0C43AE73FD1}"
+EndProject
+Project("{4F2E2C19-372F-40D8-9FA7-9D2138C6997A}") = "GCSS_Stage3", "GCSS_Stage3\GCSS_Stage3.ssmssqlproj", "{093F7CA8-42CA-489A-85F1-2B717EBB737F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Standard|Default = Standard|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36276ADF-3BD2-4835-A6C8-B17AF9EF8783}.Standard|Default.ActiveCfg = Standard
+		{C806E7A5-C951-4674-8B58-79D41D81BBD8}.Standard|Default.ActiveCfg = Standard
+		{6298DBA5-1F83-40D4-B69B-E0C43AE73FD1}.Standard|Default.ActiveCfg = Standard
+		{093F7CA8-42CA-489A-85F1-2B717EBB737F}.Standard|Default.ActiveCfg = Standard
+		{00000000-0000-0000-0000-000000000000}.Standard|Default.ActiveCfg = Standard
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

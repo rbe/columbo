@@ -1,0 +1,13 @@
+bcp columbo1.rbe.CASE_END2END format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f CASE_END2END.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.EMPLOYEE_TABLE_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f EMPLOYEE_TABLE_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.HP_COUNTRY_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f HP_COUNTRY_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.HP_OFFER_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f HP_OFFER_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.HP_PART_ORDER_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f HP_PART_ORDER_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.HP_PARTS_INFO_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f HP_PARTS_INFO_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.HP_SV_DLVR_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f HP_SV_DLVR_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.NOTES_LOG_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f NOTES_LOG_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.ONSITE_LOG_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f ONSITE_LOG_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.PHONE_LOG_DM format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f PHONE_LOG_DM.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.SUBCASE_END2END format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f SUBCASE_END2END.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.WFM_CASE format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f WFM_CASE.fmt -w -q -t ; -r \n
+bcp columbo1.rbe.WFM_SUBCASE format nul -U rbe -P rbe -S AOCSQL1\aoc1 -f WFM_SUBCASE.fmt -w -q -t ; -r \n
