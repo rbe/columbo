@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- -->
+    <name>columbo</name>
+    <groupId>eu.artofcoding.columbo</groupId>
+    <artifactId>columbo</artifactId>
+    <version>4.0.0-SNAPSHOT</version>
+    <!-- Packaging -->
+    <packaging>pom</packaging>
+    <!--
+        Modules.
+    -->
+    <modules>
+        <module>columbo-grownloader</module>
+        <module>columbo-grownloader2</module>
+        <module>columbo-grownloader2-webconsole</module>
+    </modules>
+    <!--
+        Properties.
+    -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Maven -->
+        <project.maven-compiler-plugin.version>2.3.2</project.maven-compiler-plugin.version>
+        <project.maven-resources-plugin.version>2.5</project.maven-resources-plugin.version>
+        <project.build-helper-maven-plugin.version>1.5</project.build-helper-maven-plugin.version>
+        <project.groovy-eclipse-compiler.version>2.6.0-01</project.groovy-eclipse-compiler.version>
+        <!-- Java -->
+        <project.java.version>1.6</project.java.version>
+        <!-- Groovy -->
+        <project.groovy.version>1.8.6</project.groovy.version>
+        <!-- Testing -->
+        <project.junit.version>4.10</project.junit.version>
+        <!-- Logging -->
+        <project.slf4j.version>1.6.4</project.slf4j.version>
+        <project.logback.version>1.0.3</project.logback.version>
+        <!-- OSGi -->
+        <project.osgi-core.version>4.2.0</project.osgi-core.version>
+        <project.osgi-compendium.version>4.2.0</project.osgi-compendium.version>
+        <project.maven-bundle-plugin.version>2.3.7</project.maven-bundle-plugin.version>
+        <!-- JDBC -->
+        <project.mysql.driver.version>5.1.19</project.mysql.driver.version>
+        <project.oracle.driver.version>11.2.0.3.0</project.oracle.driver.version>
+        <project.sqlserver.driver.version>4.0</project.sqlserver.driver.version>
+    </properties>
+    <!--
+
+        Dependencies.
+
+    -->
+    <dependencies>
+    </dependencies>
+    <!--
+        Maven Environment.
+    -->
+    <!-- Repositories. -->
+    <repositories>
+        <!-- art of coding's Public Maven Repository (local) -->
+        <repository>
+            <id>public.maven.repository</id>
+            <name>Public Local Repository</name>
+            <url>file:../../public.maven.repository/</url>
+        </repository>
+        <!-- art of coding's Public Maven Repository
+        <repository>
+            <id>aoc.public.maven.repository</id>
+            <name>art of coding's public.maven.repository on GitHub</name>
+            <url>https://raw.github.com/artofcoding/public.maven.repository/master</url>
+            <layout>default</layout>
+        </repository>
+        -->
+        <!-- java.net -->
+        <repository>
+            <id>java.net</id>
+            <url>http://download.java.net/maven/2</url>
+        </repository>
+        <!--
+            Spring
+            http://static.springsource.org/spring-batch/downloads.html
+        -->
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Maven RELEASE Repository</name>
+            <url>http://maven.springframework.org/release</url>
+        </repository>
+        <!-- JBoss -->
+        <repository>
+            <id>repository.jboss.org</id>
+            <name>JBoss Repository</name>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        </repository>
+    </repositories>
+    <!-- Distribution Management. -->
+    <distributionManagement>
+        <!-- art of coding's Public Maven Repository (local) -->
+        <repository>
+            <id>public.maven.repository</id>
+            <name>Public Local Repository</name>
+            <url>file:../../public.maven.repository/</url>
+        </repository>
+    </distributionManagement>
+</project>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+                           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!-- Import base configurations -->
+    <import resource="classpath:META-INF/spring-context.xml"/>
+    <import resource="datasources.xml"/>
+    <!--
+        CASE_END2END.
+    -->
+    <!-- Reader -->
+    <bean id="caseEnd2EndItemReaderRowMapper" class="eu.artofcoding.grownloader2.cdd.CaseEnd2EndRowMapper">
+    </bean>
+    <bean id="caseEnd2EndItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="sourceDataSource"/>
+        <property name="sql"
+                  value="select CASE_ID, ACCOUNTABILITY_ID, CALL_TYPE, CASE_TITLE, CONDITION_CODE_VALUE, CONTRACT_ID, NAME, ADDRESS, ADDRESS2, ZIP_CODE, CITY, COUNTRY, CONTACT_FIRST_NAME, CONTACT_LAST_NAME, CALLER_PHONE, CONTACT_E_MAIL, PRODUCT_FAMILY, PRODUCT, PRODUCT_DESCRIPTION, PRODUCT_LINE, SERIAL_NUMBER, SERVICE_NOTE_NUMBER, WARR_PROOF_PURCHASE, WARR_CODE, WARR_DESC, WARR_RESP, CR_DATE_GMT, CR_DATE_CUST, CR_LOGIN_NAME, CR_WORK_GROUP, CR_RESPONSE_CENTER, OW_LOGIN_NAME, OW_RESPONSE_CENTER, WARRANTY_STATUS, DATE_MODIFIED, EMPLOYEE_OWNER, ENTRY_POINT, DELIVERY_ALTERNATIVE from case_end2end where date_modified BETWEEN TO_DATE(?, 'DD.MM.YYYY HH24:MI:SS') AND TO_DATE(?, 'DD.MM.YYYY HH24:MI:SS')"/>
+        <property name="rowMapper" ref="caseEnd2EndItemReaderRowMapper"/>
+        <property name="fetchSize" value="1000"/>
+    </bean>
+    <!-- Writer -->
+    <bean id="caseEnd2EndItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="destinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO case_end2end (CASE_ID, ACCOUNTABILITY_ID, CALL_TYPE, CASE_TITLE, CONDITION_CODE_VALUE, CONTRACT_ID, NAME, ADDRESS, ADDRESS2, ZIP_CODE, CITY, COUNTRY, CONTACT_FIRST_NAME, CONTACT_LAST_NAME, CALLER_PHONE, CONTACT_E_MAIL, PRODUCT_FAMILY, PRODUCT, PRODUCT_DESCRIPTION, PRODUCT_LINE, SERIAL_NUMBER, SERVICE_NOTE_NUMBER, WARR_PROOF_PURCHASE, WARR_CODE, WARR_DESC, WARR_RESP, CR_DATE_GMT, CR_DATE_CUST, CR_LOGIN_NAME, CR_WORK_GROUP, CR_RESPONSE_CENTER, OW_LOGIN_NAME, OW_RESPONSE_CENTER, WARRANTY_STATUS, DATE_MODIFIED, EMPLOYEE_OWNER, ENTRY_POINT, DELIVERY_ALTERNATIVE)
+                                           VALUES (:CASE_ID, :ACCOUNTABILITY_ID, :CALL_TYPE, :CASE_TITLE, :CONDITION_CODE_VALUE, :CONTRACT_ID, :NAME, :ADDRESS, :ADDRESS2, :ZIP_CODE, :CITY, :COUNTRY, :CONTACT_FIRST_NAME, :CONTACT_LAST_NAME, :CALLER_PHONE, :CONTACT_E_MAIL, :PRODUCT_FAMILY, :PRODUCT, :PRODUCT_DESCRIPTION, :PRODUCT_LINE, :SERIAL_NUMBER, :SERVICE_NOTE_NUMBER, :WARR_PROOF_PURCHASE, :WARR_CODE, :WARR_DESC, :WARR_RESP, :CR_DATE_GMT, :CR_DATE_CUST, :CR_LOGIN_NAME, :CR_WORK_GROUP, :CR_RESPONSE_CENTER, :OW_LOGIN_NAME, :OW_RESPONSE_CENTER, :WARRANTY_STATUS, :DATE_MODIFIED, :EMPLOYEE_OWNER, :ENTRY_POINT, :DELIVERY_ALTERNATIVE)"/>
+    </bean>
+    <!-- Job -->
+    <batch:job id="caseEnd2EndJob">
+        <batch:step id="readStep">
+            <batch:tasklet transaction-manager="transactionManager">
+                <batch:chunk reader="caseEnd2EndItemReader"
+                             writer="caseEnd2EndItemWriter"
+                             commit-interval="1000"/>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!-- Scheduler -->
+    <!--
+    <bean id="caseEnd2EndSchedulingLauncher" class="eu.artofcoding.grownloaderloader.cdd.SpringSchedulingLauncher">
+        <property name="job" ref="caseEnd2EndJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <task:scheduled ref="caseEnd2EndSchedulingLauncher" method="launch" fixed-delay="900000"/>
+    </task:scheduled-tasks>
+    -->
+</beans>
