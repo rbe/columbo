@@ -6,7 +6,7 @@
  * Use is subject to license terms, see http://files.art-of-coding.eu/aoc/AOCPL_v10_en.html
  *
  */
-package eu.artofcoding.corma.columbo.helper
+package eu.artofcoding.grownloader.columbo.helper
 
 class PathHelper {
     

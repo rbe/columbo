@@ -6,7 +6,7 @@
  * Use is subject to license terms, see http://files.art-of-coding.eu/aoc/AOCPL_v10_en.html
  *
  */
-package eu.artofcoding.corma.columbo.route
+package eu.artofcoding.grownloader.columbo.route
 
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as GCH
 

@@ -6,14 +6,12 @@
  * Use is subject to license terms, see http://files.art-of-coding.eu/aoc/AOCPL_v10_en.html
  *
  */
-package eu.artofcoding.corma.columbo.helper
+package eu.artofcoding.grownloader.columbo.helper
 
-import java.sql.ResultSet
-import java.sql.SQLException
 import javax.sql.DataSource
-import org.springframework.jdbc.core.RowMapper
+
 import org.springframework.jdbc.core.SqlParameter
-import org.springframework.jdbc.core.SqlReturnResultSet
+
 import org.springframework.jdbc.object.StoredProcedure
 
 /**

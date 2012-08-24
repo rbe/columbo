@@ -6,11 +6,11 @@
  * Use is subject to license terms, see http://files.art-of-coding.eu/aoc/AOCPL_v10_en.html
  *
  */
-package eu.artofcoding.corma.columbo.service
+package eu.artofcoding.grownloader.columbo.service
 
-import eu.artofcoding.corma.columbo.helper.PathHelper as Ph
-import eu.artofcoding.corma.columbo.helper.Stage1LoadStoredProcedure
-import eu.artofcoding.corma.columbo.helper.Stage2MergeStoredProcedure
+import eu.artofcoding.grownloader.columbo.helper.PathHelper as Ph
+import eu.artofcoding.grownloader.columbo.helper.Stage1LoadStoredProcedure
+import eu.artofcoding.grownloader.columbo.helper.Stage2MergeStoredProcedure
 import org.apache.commons.dbcp.BasicDataSource
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
 
