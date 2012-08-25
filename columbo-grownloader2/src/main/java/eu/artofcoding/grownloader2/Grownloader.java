@@ -1,15 +1,30 @@
+/*
+ * columbo
+ * columbo-grownloader2
+ * Copyright (C) 2010-2010 Informationssysteme Ralf Bensmann, http://www.bensmann.com/
+ * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu/
+ *
+ * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * rbe, 8/24/12 11:25 AM
+ */
+
 package eu.artofcoding.grownloader2;
 
+import eu.artofcoding.grownloader2.spring.Slf4j;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+@Component
 public class Grownloader {
 
-    private static final Logger logger = LoggerFactory.getLogger(Grownloader.class); //Logger.getLogger(Grownloader.class.getName());
+    @Slf4j
+    private static Logger logger;
 
     private static final CountDownLatch COUNT_DOWN_LATCH = new CountDownLatch(1);
     private static final AtomicBoolean COMPLETED = new AtomicBoolean(false);
@@ -19,14 +34,7 @@ public class Grownloader {
         COUNT_DOWN_LATCH.countDown();
     }
 
-    public static void main(String[] args) {
-        // Configure and start Spring application context
-        final String[] contextXml = new String[]{
-                "classpath:META-INF/spring-context.xml",
-                "conf/datasources.xml",
-                "conf/table1.xml"
-        };
-        FileSystemXmlApplicationContext applicationContext = new FileSystemXmlApplicationContext(contextXml);
+    private static void waitForShutdown() {
         // Wait...
         while (!COMPLETED.get()) {
             try {
@@ -35,11 +43,34 @@ public class Grownloader {
                 // ignore...
             }
         }
-        logger.info("Seems we're finished... stopping Spring application context");
+    }
+
+    private static void performShutdown(FileSystemXmlApplicationContext applicationContext) {
         // Stop Spring
         if (COMPLETED.get()) {
+            logger.info("Seems we're finished... stopping Spring application context");
             applicationContext.close();
+            logger.info("Closed Spring application context!");
         }
+    }
+
+    public static void main(String[] args) {
+        // Register shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                shutdown();
+            }
+        }));
+        // Configure and start Spring application context
+        final String[] contextXml = new String[]{
+                "conf/system/spring-context.xml",
+                "conf/datasources.xml",
+                "conf/tables.xml"
+        };
+        FileSystemXmlApplicationContext applicationContext = new FileSystemXmlApplicationContext(contextXml);
+        waitForShutdown();
+        performShutdown(applicationContext);
         logger.info("Bye!");
     }
 

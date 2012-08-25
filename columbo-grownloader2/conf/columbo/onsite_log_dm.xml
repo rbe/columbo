@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!--
+
+        ONSITE_LOG_DM.
+
+    -->
+    <!--
+        State helper.
+    -->
+    <bean id="onsiteLogDmStateHelper" class="eu.artofcoding.grownloader2.StateHelper">
+        <property name="tableName" value="onsite_log_dm"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="onsiteLogDmItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="columboSourceDataSource"/>
+        <property name="sql"
+                  value="SELECT onsite_log_id, accountability_id, case_id, case_subcase, employee_table_id, date_modified, notes, perf_by FROM onsite_log_dm WHERE date_modified BETWEEN TO_DATE(?, 'DD.MM.YYYY HH24:MI:SS') AND TO_DATE(?, 'DD.MM.YYYY HH24:MI:SS')"/>
+        <property name="preparedStatementSetter">
+            <bean id="table2DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader2.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="onsiteLogDmStateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="onsiteLogDmItemReaderRowMapper"
+                  class="eu.artofcoding.grownloader2.columbo.entity.OnsiteLogDmRowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="onsiteLogDmItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="columboDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO onsite_log_dm (onsite_log_id, accountability_id, case_id, case_subcase, employee_table_id, date_modified, notes, perf_by) VALUES (:onsiteLogId, :accountabilityId, :caseId, :caseSubcase, :employeeTableId, :dateModified, :notes, :perfBy)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="onsiteLogDmJob" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="onsiteLogDmCreateDestinationTableStep" next="onsiteLogDmReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="onsiteLogDmTableCreator" class="eu.artofcoding.grownloader2.columbo.TableCreator">
+                    <property name="schemaName" value="stage1"/>
+                    <property name="tableName" value="onsite_log_dm"/>
+                    <property name="procedureName" value="stage1.p_create_onsite_log_dm"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="onsiteLogDmReadAndWriteStep" next="onsiteLogDmMergeDataStep">
+            <batch:tasklet>
+                <batch:chunk reader="onsiteLogDmItemReader"
+                             writer="onsiteLogDmItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2 -->
+        <batch:step id="onsiteLogDmMergeDataStep" next="onsiteLogDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="onsiteLogDmMergeIntoStage2" class="eu.artofcoding.grownloader2.columbo.Stage2Merger">
+                    <property name="tableName" value="onsiteLogDm"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Record successful download -->
+        <batch:step id="onsiteLogDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="onsiteLogDmRecordState" class="eu.artofcoding.grownloader2.DownloadStateRecorder">
+                    <property name="stateHelper" ref="onsiteLogDmStateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="onsiteLogDmSchedulingLauncher" class="eu.artofcoding.grownloader2.SpringSchedulingLauncher">
+        <property name="job" ref="onsiteLogDmJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="onsiteLogDmSchedulingLauncher" method="launch" fixed-delay="10000"/>
+    </task:scheduled-tasks>
+</beans>

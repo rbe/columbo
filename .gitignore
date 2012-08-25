@@ -2,6 +2,7 @@ archive/
 DataSource.groovy
 *-config.groovy
 *-state.groovy
+*.log
 
 # IntelliJ #
 *.iml

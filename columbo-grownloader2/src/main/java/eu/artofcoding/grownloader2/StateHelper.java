@@ -1,17 +1,34 @@
+/*
+ * columbo
+ * columbo-grownloader2
+ * Copyright (C) 2010-2010 Informationssysteme Ralf Bensmann, http://www.bensmann.com/
+ * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu/
+ *
+ * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * rbe, 8/24/12 11:13 AM
+ */
+
 package eu.artofcoding.grownloader2;
 
+import eu.artofcoding.grownloader2.spring.Slf4j;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Map;
 
+@Component
 public class StateHelper {
 
-    private static final Logger logger = LoggerFactory.getLogger(StateHelper.class.getName());
+    @Slf4j
+    private static Logger logger;
 
     private String tableName;
 
@@ -19,7 +36,7 @@ public class StateHelper {
 
     private JdbcTemplate jdbcTemplate;
 
-    private final String stateQuery = "SELECT last_download, download_hours FROM cddstate WHERE table_name = ?";
+    private final String stateQuery = "SELECT last_download, download_hours FROM grownstate WHERE table_name = ?";
 
     private StateEntity stateEntity;
 
@@ -39,21 +56,26 @@ public class StateHelper {
      * @return
      */
     public StateEntity getState() {
-        // Query 'since last download'
-        Map<String, Object> map = jdbcTemplate.queryForMap(stateQuery, tableName);
-        Timestamp last_download = (Timestamp) map.get("last_download");
-        Integer download_hours = (Integer) map.get("download_hours");
-        // Create StateEntity
-        stateEntity = new StateEntity();
-        // Calculate last_download + download_hours and save this values in StateEntity
-        Calendar dateFrom = Calendar.getInstance();
-        dateFrom.setTimeInMillis(last_download.getTime());
-        stateEntity.setDateFrom(dateFrom);
-        Calendar dateTo = (Calendar) dateFrom.clone();
-        dateTo.add(Calendar.HOUR_OF_DAY, download_hours);
-        stateEntity.setDateTo(dateTo);
-        //
-        return stateEntity;
+        try {
+            // Query 'since last download'
+            Map<String, Object> map = jdbcTemplate.queryForMap(stateQuery, tableName);
+            Timestamp last_download = (Timestamp) map.get("last_download");
+            Integer download_hours = (Integer) map.get("download_hours");
+            // Create StateEntity
+            stateEntity = new StateEntity();
+            stateEntity.setTableName(tableName);
+            // Calculate last_download + download_hours and save this values in StateEntity
+            Calendar dateFrom = Calendar.getInstance();
+            dateFrom.setTimeInMillis(last_download.getTime());
+            stateEntity.setDateFrom(dateFrom);
+            Calendar dateTo = (Calendar) dateFrom.clone();
+            dateTo.add(Calendar.HOUR_OF_DAY, download_hours);
+            stateEntity.setDateTo(dateTo);
+            //
+            return stateEntity;
+        } catch (EmptyResultDataAccessException e) {
+            throw new IllegalStateException("No information found in state table for " + tableName);
+        }
     }
 
     /**
@@ -62,8 +84,8 @@ public class StateHelper {
      * @return
      */
     public StateEntity nextState() {
-        logger.info("Recording last_download date: " + stateEntity.getDateTo().getTime());
-        jdbcTemplate.update("UPDATE cddstate SET last_download = ? WHERE table_name = ?", stateEntity.getDateTo(), tableName);
+        logger.info(String.format("Recording last_download date: %s", stateEntity.getDateTo().getTime()));
+        jdbcTemplate.update("UPDATE grownstate SET last_download = ? WHERE table_name = ?", stateEntity.getDateTo(), tableName);
         return stateEntity;
     }
 

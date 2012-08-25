@@ -13,27 +13,11 @@
 
     <context:annotation-config/>
     <context:component-scan base-package="eu.artofcoding.grownloader2"/>
+    <bean id="slf4jLoggingPostProcessor" class="eu.artofcoding.grownloader2.spring.Slf4jPostProcessor"/>
 
     <!--
         Datasources.
     -->
-    <bean id="systemDataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/grownloader2"/>
-        <property name="username" value="corma"/>
-        <property name="password" value="corma"/>
-        <property name="initialSize" value="1"/>
-        <property name="maxActive" value="10"/>
-        <!--
-        <property name="testWhileIdle" value="true"/>
-        <property name="validationQuery" value="select 1"/>
-        <property name="testOnReturn" value="true"/>
-        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
-        <property name="removeAbandoned" value="true"/>
-        <property name="removeAbandonedTimeout" value="10"/>
-        <property name="logAbandoned" value="true"/>
-        -->
-    </bean>
     <!-- Embedded Database
     <jdbc:embedded-database id="embeddedDataSource" type="H2">
     </jdbc:embedded-database>
@@ -56,12 +40,16 @@
         <property name="dataSource" ref="systemDataSource"/>
         <property name="transactionManager" ref="transactionManager"/>
     </bean>
-    <!-- TaskExecutor, Job Launcher (asynchronous) -->
+    <!-- TaskExecutor, Job Launcher (asynchronous)
     <task:executor id="taskExecutor" pool-size="10"/>
+    -->
+    <!-- <task:scheduler id="myScheduler" pool-size="10"/> -->
     <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
         <property name="jobRepository" ref="jobRepository"/>
-        <property name="taskExecutor" ref="taskExecutor"/>
+        <!-- Use for async execution <property name="taskExecutor" ref="taskExecutor"/> -->
     </bean>
     <!-- JobParameterIncrementer -->
     <bean id="dynamicJobParameters" class="eu.artofcoding.grownloader2.DynamicJobParameterIncrementer"/>
+    <!-- ErrorListener -->
+    <bean id="systemErrorExecutionLister" class="eu.artofcoding.grownloader2.ErroredExecutionListener"/>
 </beans>

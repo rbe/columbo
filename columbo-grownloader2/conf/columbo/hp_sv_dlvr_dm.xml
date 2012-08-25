@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!--
+
+        HP_SV_DLVR_DM.
+
+    -->
+    <!--
+        State helper.
+    -->
+    <bean id="hpSvDlvrDmStateHelper" class="eu.artofcoding.grownloader2.StateHelper">
+        <property name="tableName" value="hp_sv_dlvr_dm"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="hpSvDlvrDmItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="columboSourceDataSource"/>
+        <property name="sql"
+                  value="SELECT hp_sv_dlvr_id, case_id, subcase_id, x_service_location, x_address, x_address_2, x_city, x_state, x_zipcode, x_iso_country_code, x_contact_phone, engineer_first_name, engineer_last_name, date_modified, x_contact_first_name, x_contact_last_name, x_contact_alt_phone, x_contact_email, x_contact_pref_lang, x_alt_contact_first_name, x_alt_contact_last_name, x_alt_contact_phone, x_alt_contact_alt_phone, x_alt_contact_email, x_alt_contact_pref_lang FROM hp_sv_dlvr_dm WHERE date_modified BETWEEN TO_DATE(?, 'DD.MM.YYYY HH24:MI:SS') AND TO_DATE(?, 'DD.MM.YYYY HH24:MI:SS')"/>
+        <property name="preparedStatementSetter">
+            <bean id="table2DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader2.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="hpSvDlvrDmStateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="hpSvDlvrDmItemReaderRowMapper"
+                  class="eu.artofcoding.grownloader2.columbo.entity.HpSvDlvrDmRowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="hpSvDlvrDmItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="columboDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO hp_sv_dlvr_dm (hp_sv_dlvr_id, case_id, subcase_id, x_service_location, x_address, x_address_2, x_city, x_state, x_zipcode, x_iso_country_code, x_contact_phone, engineer_first_name, engineer_last_name, date_modified, x_contact_first_name, x_contact_last_name, x_contact_alt_phone, x_contact_email, x_contact_pref_lang, x_alt_contact_first_name, x_alt_contact_last_name, x_alt_contact_phone, x_alt_contact_alt_phone, x_alt_contact_email, x_alt_contact_pref_lang) VALUES (:hpSvDlvrId, :caseId, :subcaseId, :xServiceLocation, :xAddress, :xAddress_2, :xCity, :xState, :xZipcode, :xIsoCountryCode, :xContactPhone, :engineerFirstName, :engineerLastName, :dateModified, :xContactFirstName, :xContactLastName, :xContactAltPhone, :xContactEmail, :xContactPrefLang, :xAltContactFirstName, :xAltContactLastName, :xAltContactPhone, :xAltContactAltPhone, :xAltContactEmail, :xAltContactPrefLang)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="hpSvDlvrDmJob" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="hpSvDlvrDmCreateDestinationTableStep" next="hpSvDlvrDmReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="hpSvDlvrDmTableCreator" class="eu.artofcoding.grownloader2.columbo.TableCreator">
+                    <property name="schemaName" value="stage1"/>
+                    <property name="tableName" value="hp_sv_dlvr_dm"/>
+                    <property name="procedureName" value="stage1.p_create_hp_sv_dlvr_dm"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="hpSvDlvrDmReadAndWriteStep" next="hpSvDlvrDmMergeDataStep">
+            <batch:tasklet>
+                <batch:chunk reader="hpSvDlvrDmItemReader"
+                             writer="hpSvDlvrDmItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2 -->
+        <batch:step id="hpSvDlvrDmMergeDataStep" next="hpSvDlvrDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="hpSvDlvrDmMergeIntoStage2" class="eu.artofcoding.grownloader2.columbo.Stage2Merger">
+                    <property name="tableName" value="hpSvDlvrDm"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Record successful download -->
+        <batch:step id="hpSvDlvrDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="hpSvDlvrDmRecordState" class="eu.artofcoding.grownloader2.DownloadStateRecorder">
+                    <property name="stateHelper" ref="hpSvDlvrDmStateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="hpSvDlvrDmSchedulingLauncher" class="eu.artofcoding.grownloader2.SpringSchedulingLauncher">
+        <property name="job" ref="hpSvDlvrDmJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="hpSvDlvrDmSchedulingLauncher" method="launch" fixed-delay="10000"/>
+    </task:scheduled-tasks>
+</beans>

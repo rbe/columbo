@@ -5,23 +5,74 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                            http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
     <!--
-        Datasources.
+
+        System.
+
     -->
-    <!-- <bean id="sourceDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
-    <bean id="sourceDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <!--
+        Datasource.
+    -->
+    <bean id="systemDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/grownloader"/>
+        <property name="username" value="grownloader"/>
+        <property name="password" value="grownloader"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="10"/>
+        <!--
+        <property name="testWhileIdle" value="true"/>
+        <property name="validationQuery" value="select 1"/>
+        <property name="testOnReturn" value="true"/>
+        <property name="timeBetweenEvictionRunsMillis" value="10000"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="10"/>
+        <property name="logAbandoned" value="true"/>
+        -->
+    </bean>
+    <!--
+
+        Test.
+
+    -->
+    <!--
+        DataSource
+    -->
+    <bean id="testSourceDataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/grownloader1"/>
         <property name="username" value="corma"/>
         <property name="password" value="corma"/>
-        <property name="initialSize" value="5"/>
+        <property name="initialSize" value="1"/>
         <property name="maxActive" value="10"/>
     </bean>
-    <bean id="destinationDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+    <bean id="testDestinationDataSource" class="org.apache.commons.dbcp.BasicDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/grownloader2"/>
         <property name="username" value="corma"/>
         <property name="password" value="corma"/>
-        <property name="initialSize" value="5"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="10"/>
+    </bean>
+    <!--
+
+        Columbo.
+
+    -->
+    <!-- DataSource -->
+    <bean id="columboSourceDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/grownloader1"/>
+        <property name="username" value="corma"/>
+        <property name="password" value="corma"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxActive" value="10"/>
+    </bean>
+    <bean id="columboDestinationDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/grownloader2"/>
+        <property name="username" value="corma"/>
+        <property name="password" value="corma"/>
+        <property name="initialSize" value="1"/>
         <property name="maxActive" value="10"/>
     </bean>
 </beans>

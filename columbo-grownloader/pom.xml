@@ -21,6 +21,12 @@
         Properties.
     -->
     <properties>
+        <!-- JDBC -->
+        <project.mysql.driver.version>5.1.19</project.mysql.driver.version>
+        <project.oracle.driver.version>11.2.0.3.0</project.oracle.driver.version>
+        <project.sqlserver.driver.version>4.0</project.sqlserver.driver.version>
+        <!-- Groovy -->
+        <project.groovy.version>1.8.6</project.groovy.version>
     </properties>
     <!--
         Dependencies.
@@ -58,12 +64,12 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>${project.slf4j.version}</version>
+            <version>${version.org.slf4j}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${project.logback.version}</version>
+            <version>${version.ch.qos.logback}</version>
         </dependency>
         <!-- JDBC driver for MySQL -->
         <dependency>

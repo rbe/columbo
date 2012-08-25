@@ -1,5 +1,18 @@
-package eu.artofcoding.grownloader2.cdd;
+/*
+ * columbo
+ * columbo-grownloader2
+ * Copyright (C) 2010-2010 Informationssysteme Ralf Bensmann, http://www.bensmann.com/
+ * Copyright (C) 2011-2012 art of coding UG, http://www.art-of-coding.eu/
+ *
+ * Alle Rechte vorbehalten. Nutzung unterliegt Lizenzbedingungen.
+ * All rights reserved. Use is subject to license terms.
+ *
+ * rbe, 8/24/12 10:46 AM
+ */
 
+package eu.artofcoding.grownloader2.columbo;
+
+import eu.artofcoding.grownloader2.spring.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.StepContribution;
@@ -7,12 +20,15 @@ import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
+@Component
 public class Stage2Merger implements Tasklet {
 
-    private static final Logger logger = LoggerFactory.getLogger(Stage2Merger.class.getName());
+    @Slf4j
+    private static Logger logger;
 
     private String tableName;
 
@@ -41,7 +57,7 @@ public class Stage2Merger implements Tasklet {
 
     @Override
     public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-        logger.info("Merging stage1 into stage2 for " + tableName + " on " + dataSource);
+        logger.info(String.format("Merging stage1 into stage2 for %s on %s", tableName, dataSource));
         // Call stored proc
         /*
         CallableStatementCreator csc = new Csc();
@@ -50,7 +66,7 @@ public class Stage2Merger implements Tasklet {
         declaredParameters.add(new SqlParameter("source_table", Types.VARCHAR));
         jdbcTemplate.call(csc, declaredParameters);
         */
-        jdbcTemplate.update("call stage2.p_merge(?, ?)", tableName, tableName);
+        jdbcTemplate.update("{call stage2.p_merge(?, ?)}", tableName, tableName); // TODO p_merge_all?
         return RepeatStatus.FINISHED;
     }
 
