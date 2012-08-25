@@ -62,6 +62,7 @@
                     <property name="schemaName" value="stage1"/>
                     <property name="tableName" value="subcase_end2end"/>
                     <property name="procedureName" value="stage1.p_create_subcase_end2end"/>
+                    <property name="dataSource" value="columboDestinationDataSource"/>
                 </bean>
             </batch:tasklet>
         </batch:step>

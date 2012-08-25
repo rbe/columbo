@@ -61,6 +61,7 @@
                     <property name="schemaName" value="stage1"/>
                     <property name="tableName" value="wfm_case"/>
                     <property name="procedureName" value="stage1.p_create_wfm_case"/>
+                    <property name="dataSource" value="columboDestinationDataSource"/>
                 </bean>
             </batch:tasklet>
         </batch:step>

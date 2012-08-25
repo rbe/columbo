@@ -62,6 +62,7 @@
                     <property name="schemaName" value="stage1"/>
                     <property name="tableName" value="hp_parts_info_dm"/>
                     <property name="procedureName" value="stage1.p_create_hp_parts_info_dm"/>
+                    <property name="dataSource" value="columboDestinationDataSource"/>
                 </bean>
             </batch:tasklet>
         </batch:step>
