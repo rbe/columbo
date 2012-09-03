@@ -38,7 +38,7 @@ BEGIN
 	  FROM
 		gcss.merge_desc m
 	 WHERE
-		m.target_table_name = @target_table
+		LOWER(m.target_table_name) = LOWER(@target_table)
 	 ORDER BY
 		m.id
 	WHILE @@ROWCOUNT = 1
@@ -66,7 +66,7 @@ BEGIN
 			gcss.merge_desc m
 		 WHERE
 			m.id > @m_id
-			AND m.target_table_name = @target_table
+			AND LOWER(m.target_table_name) = LOWER(@target_table)
 		 ORDER BY
 			m.id
 	END
