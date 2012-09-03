@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Class-Path: lib/logback-core-1.0.6.jar lib/logback-classic-1.0.6.jar l
+ ib/commons-dbcp-1.4.jar lib/mysql-connector-java-5.1.21.jar lib/aopal
+ liance-1.0.jar lib/spring-expression-3.1.2.RELEASE.jar lib/spring-bea
+ ns-3.1.2.RELEASE.jar lib/logback-access-1.0.6.jar lib/spring-batch-in
+ frastructure-2.1.8.RELEASE.jar lib/jettison-1.1.jar lib/commons-pool-
+ 1.5.4.jar lib/log4j-1.2.17.jar lib/ojdbc6-11.2.0.3.0.jar lib/commons-
+ logging-1.1.1.jar lib/spring-asm-3.1.2.RELEASE.jar lib/spring-batch-c
+ ore-2.1.8.RELEASE.jar lib/sqljdbc4-4.0.jar lib/jcl-over-slf4j-1.6.6.j
+ ar lib/spring-jdbc-3.1.2.RELEASE.jar lib/slf4j-api-1.6.6.jar lib/spri
+ ng-context-support-3.1.2.RELEASE.jar lib/spring-aop-2.5.6.jar lib/spr
+ ing-context-3.1.2.RELEASE.jar lib/spring-tx-3.1.2.RELEASE.jar lib/xst
+ ream-1.3.jar lib/xpp3_min-1.1.4c.jar lib/spring-core-3.1.2.RELEASE.ja
+ r
+Main-Class: eu.artofcoding.grownloader.Grownloader
+

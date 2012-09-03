@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    <!--
+
+        Table1.
+
+    -->
+    <bean id="tableName" class="java.lang.String">
+        <constructor-arg value="table1"/>
+    </bean>
+    <util:map id="configBean">
+        <entry key="tableName" value="table1"/>
+        <entry key="dbUser" value="theDBuser"/>
+        <entry key="dbPwd" value="pwd"/>
+    </util:map>
+    <!--
+        State helper.
+    -->
+    <bean id="table1StateHelper" class="eu.artofcoding.grownloader.StateHelper">
+        <property name="tableName" value="${tableName}"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="table1ItemReaderRowMapper" class="eu.artofcoding.grownloader.test.Table1RowMapper"/>
+    <bean id="table1ItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="testSourceDataSource"/>
+        <property name="sql"
+                  value="SELECT id, customer, bla, blub, another_data FROM table1 WHERE bla BETWEEN ? AND ?"/>
+        <property name="preparedStatementSetter">
+            <bean id="table1DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="table1StateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="table1ItemReaderRowMapper" class="eu.artofcoding.grownloader.test.Table1RowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="table1ItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="testDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean id="table1SqlParameterProvider"
+                  class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO stage1.table1 (id, customer, bla, blub, another_data) VALUES (:id, :customer, :bla, :blub, :another_data)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="table1Job" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="table1CreateDestinationTableStep" next="table1ReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="table1TableCreator" class="eu.artofcoding.grownloader.test.Table1Creator">
+                    <property name="dataSource" ref="testDestinationDataSource"/>
+                </bean>
+                <!--
+                <bean id="table1TableCreator" class="eu.artofcoding.grownloadercolumbo.TableCreator">
+                    <property name="procedureName" value="stage1.p_create_table1"/>
+                </bean>
+                -->
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="table1ReadAndWriteStep" next="recordTable1StateStep"> <!-- table1MergeDataStep -->
+            <batch:tasklet>
+                <batch:chunk reader="table1ItemReader"
+                             writer="table1ItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2
+        <batch:step id="table1MergeDataStep" next="recordTable1StateStep">
+            <batch:tasklet>
+                <bean id="table1MergeIntoStage2" class="eu.artofcoding.grownloadercolumbo.Stage2Merger">
+                    <property name="tableName" value="table1"/>
+                    <property name="dataSource" ref="destinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        -->
+        <!-- Record successful download -->
+        <batch:step id="recordTable1StateStep">
+            <batch:tasklet>
+                <bean id="recordTable1State" class="eu.artofcoding.grownloader.DownloadStateRecorder">
+                    <property name="stateHelper" ref="table1StateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="table1SchedulingLauncher" class="eu.artofcoding.grownloader.SpringSchedulingLauncher">
+        <property name="job" ref="table1Job"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="table1SchedulingLauncher" method="launch" fixed-delay="10000"/>
+    </task:scheduled-tasks>
+</beans>

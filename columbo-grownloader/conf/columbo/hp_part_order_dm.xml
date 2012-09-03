@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!--
+
+        HP_PART_ORDER_DM.
+
+    -->
+    <!--
+        State helper.
+    -->
+    <bean id="hpPartOrderDmStateHelper" class="eu.artofcoding.grownloader.StateHelper">
+        <property name="tableName" value="hp_part_order_dm"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="hpPartOrderDmItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="columboSourceDataSource"/>
+        <property name="sql"
+        value="SELECT hp_part_order_id, subcase_id, case_id, x_order_id, x_order_number, x_ship_address, x_ship_address2, x_ship_city, x_ship_country, x_ship_state, x_ship_zipcode, x_company_name, x_logistics_system, x_contact_alt_phone, x_contact_first_name, x_contact_last_name, x_contact_phone, date_modified, x_ship_iso_country_code, x_contact_fax_number, hp_part_order_reason FROM hp_part_order_dm WHERE date_modified BETWEEN ? AND ?"/>
+        <property name="preparedStatementSetter">
+            <bean id="table2DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="hpPartOrderDmStateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="hpPartOrderDmItemReaderRowMapper"
+                  class="eu.artofcoding.grownloader.columbo.entity.HpPartOrderDmRowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="hpPartOrderDmItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="columboDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO stage1.hp_part_order_dm (hp_part_order_id, subcase_id, case_id, x_order_id, x_order_number, x_ship_address, x_ship_address2, x_ship_city, x_ship_country, x_ship_state, x_ship_zipcode, x_company_name, x_logistics_system, x_contact_alt_phone, x_contact_first_name, x_contact_last_name, x_contact_phone, date_modified, x_ship_iso_country_code, x_contact_fax_number, hp_part_order_reason) VALUES (:hpPartOrderId, :subcaseId, :caseId, :xOrderId, :xOrderNumber, :xShipAddress, :xShipAddress2, :xShipCity, :xShipCountry, :xShipState, :xShipZipcode, :xCompanyName, :xLogisticsSystem, :xContactAltPhone, :xContactFirstName, :xContactLastName, :xContactPhone, :dateModified, :xShipIsoCountryCode, :xContactFaxNumber, :hpPartOrderReason)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="hpPartOrderDmJob" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="hpPartOrderDmCreateDestinationTableStep" next="hpPartOrderDmReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="hpPartOrderDmTableCreator" class="eu.artofcoding.grownloader.columbo.TableCreator">
+                    <property name="schemaName" value="stage1"/>
+                    <property name="tableName" value="hp_part_order_dm"/>
+                    <property name="procedureName" value="stage1.p_create_hp_part_order_dm"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="hpPartOrderDmReadAndWriteStep" next="hpPartOrderDmMergeDataStep">
+            <batch:tasklet>
+                <batch:chunk reader="hpPartOrderDmItemReader"
+                             writer="hpPartOrderDmItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2 -->
+        <batch:step id="hpPartOrderDmMergeDataStep" next="hpPartOrderDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="hpPartOrderDmMergeIntoStage2" class="eu.artofcoding.grownloader.columbo.Stage2Merger">
+                    <property name="tableName" value="hp_part_order_dm"/>
+                    <property name="procedureName" value="stage2.p_merge_all"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Record successful download -->
+        <batch:step id="hpPartOrderDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="hpPartOrderDmRecordState" class="eu.artofcoding.grownloader.DownloadStateRecorder">
+                    <property name="stateHelper" ref="hpPartOrderDmStateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="hpPartOrderDmSchedulingLauncher" class="eu.artofcoding.grownloader.SpringSchedulingLauncher">
+        <property name="job" ref="hpPartOrderDmJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="hpPartOrderDmSchedulingLauncher" method="launch" fixed-delay="10000"/>
+    </task:scheduled-tasks>
+</beans>

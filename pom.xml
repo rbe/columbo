@@ -14,9 +14,9 @@
         Modules.
     -->
     <modules>
+        <module>columbo-grownloader-osgi</module>
         <module>columbo-grownloader</module>
-        <module>columbo-grownloader2</module>
-        <module>columbo-grownloader2-webconsole</module>
+        <module>columbo-grownloader-webconsole</module>
     </modules>
     <!--
         Properties.
@@ -41,13 +41,6 @@
         <project.osgi-compendium.version>4.2.0</project.osgi-compendium.version>
         <project.maven-bundle-plugin.version>2.3.7</project.maven-bundle-plugin.version>
     </properties>
-    <!--
-
-        Dependencies.
-
-    -->
-    <dependencies>
-    </dependencies>
     <!--
         Maven Environment.
     -->

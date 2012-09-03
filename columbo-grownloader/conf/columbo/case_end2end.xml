@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!--
+
+        CASE_END2END.
+
+    -->
+    <!--
+        State helper.
+    -->
+    <bean id="caseEnd2EndStateHelper" class="eu.artofcoding.grownloader.StateHelper">
+        <property name="tableName" value="case_end2end"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="caseEnd2EndItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="columboSourceDataSource"/>
+        <property name="sql"
+                  value="SELECT case_id, accountability_id, call_type, case_title, condition_code_value, contract_id, name, address, address2, zip_code, city, country, contact_first_name, contact_last_name, caller_phone, contact_e_mail, product_family, product, product_description, product_line, serial_number, service_note_number, warr_proof_purchase, warr_code, warr_desc, warr_resp, cr_date_gmt, cr_date_cust, cr_login_name, cr_work_group, cr_response_center, ow_login_name, ow_response_center, warranty_status, date_modified, employee_owner, entry_point, delivery_alternative FROM case_end2end WHERE cr_date_cust BETWEEN ? AND ? OR date_modified BETWEEN ? AND ?"/>
+        <property name="preparedStatementSetter">
+            <bean id="table2DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="caseEnd2EndStateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="caseEnd2EndItemReaderRowMapper"
+                  class="eu.artofcoding.grownloader.columbo.entity.CaseEnd2EndRowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="caseEnd2EndItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="columboDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO stage1.case_end2end (case_id, accountability_id, call_type, case_title, condition_code_value, contract_id, name, address, address2, zip_code, city, country, contact_first_name, contact_last_name, caller_phone, contact_e_mail, product_family, product, product_description, product_line, serial_number, service_note_number, warr_proof_purchase, warr_code, warr_desc, warr_resp, cr_date_gmt, cr_date_cust, cr_login_name, cr_work_group, cr_response_center, ow_login_name, ow_response_center, warranty_status, date_modified, employee_owner, entry_point, delivery_alternative) VALUES (:caseId, :accountabilityId, :callType, :caseTitle, :conditionCodeValue, :contractId, :name, :address, :address2, :zipCode, :city, :country, :contactFirstName, :contactLastName, :callerPhone, :contactEMail, :productFamily, :product, :productDescription, :productLine, :serialNumber, :serviceNoteNumber, :warrProofPurchase, :warrCode, :warrDesc, :warrResp, :crDateGmt, :crDateCust, :crLoginName, :crWorkGroup, :crResponseCenter, :owLoginName, :owResponseCenter, :warrantyStatus, :dateModified, :employeeOwner, :entryPoint, :deliveryAlternative)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="caseEnd2EndJob" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="caseEnd2EndCreateDestinationTableStep" next="caseEnd2EndReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="caseEnd2EndTableCreator" class="eu.artofcoding.grownloader.columbo.TableCreator">
+                    <property name="schemaName" value="stage1"/>
+                    <property name="tableName" value="case_end2end"/>
+                    <property name="procedureName" value="stage1.p_create_case_end2end"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="caseEnd2EndReadAndWriteStep" next="caseEnd2EndMergeDataStep">
+            <batch:tasklet>
+                <batch:chunk reader="caseEnd2EndItemReader"
+                             writer="caseEnd2EndItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2 -->
+        <batch:step id="caseEnd2EndMergeDataStep" next="caseEnd2EndRecordStateStep">
+            <batch:tasklet>
+                <bean id="caseEnd2EndMergeIntoStage2" class="eu.artofcoding.grownloader.columbo.Stage2Merger">
+                    <property name="tableName" value="case_end2end"/>
+                    <property name="procedureName" value="stage2.p_merge_all"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Record successful download -->
+        <batch:step id="caseEnd2EndRecordStateStep">
+            <batch:tasklet>
+                <bean id="caseEnd2EndRecordState" class="eu.artofcoding.grownloader.DownloadStateRecorder">
+                    <property name="stateHelper" ref="caseEnd2EndStateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="caseEnd2EndSchedulingLauncher" class="eu.artofcoding.grownloader.SpringSchedulingLauncher">
+        <property name="job" ref="caseEnd2EndJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="caseEnd2EndSchedulingLauncher" method="launch" fixed-delay="10000"/>
+    </task:scheduled-tasks>
+</beans>

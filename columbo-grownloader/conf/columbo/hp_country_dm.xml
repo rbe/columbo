@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!--
+
+        HP_COUNTRY_DM.
+
+    -->
+    <!--
+        State helper.
+    -->
+    <bean id="hpCountryDmStateHelper" class="eu.artofcoding.grownloader.StateHelper">
+        <property name="tableName" value="hp_country_dm"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="hpCountryDmItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="columboSourceDataSource"/>
+        <property name="sql"
+                  value="SELECT country_id, country_code, x_iso_code, x_super_region FROM hp_country_dm"/>
+        <property name="preparedStatementSetter">
+            <bean id="table2DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="hpCountryDmStateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="hpCountryDmItemReaderRowMapper"
+                  class="eu.artofcoding.grownloader.columbo.entity.HpCountryDmRowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="hpCountryDmItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="columboDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO stage1.hp_country_dm (country_id, country_code, x_iso_code, x_super_region) VALUES (:countryId, :countryCode, :xIsoCode, :xSuperRegion)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="hpCountryDmJob" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="hpCountryDmCreateDestinationTableStep" next="hpCountryDmReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="hpCountryDmTableCreator" class="eu.artofcoding.grownloader.columbo.TableCreator">
+                    <property name="schemaName" value="stage1"/>
+                    <property name="tableName" value="hp_country_dm"/>
+                    <property name="procedureName" value="stage1.p_create_hp_country_dm"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="hpCountryDmReadAndWriteStep" next="hpCountryDmMergeDataStep">
+            <batch:tasklet>
+                <batch:chunk reader="hpCountryDmItemReader"
+                             writer="hpCountryDmItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2 -->
+        <batch:step id="hpCountryDmMergeDataStep" next="hpCountryDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="hpCountryDmMergeIntoStage2" class="eu.artofcoding.grownloader.columbo.Stage2Merger">
+                    <property name="tableName" value="hp_country_dm"/>
+                    <property name="procedureName" value="stage2.p_merge_all"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Record successful download -->
+        <batch:step id="hpCountryDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="hpCountryDmRecordState" class="eu.artofcoding.grownloader.DownloadStateRecorder">
+                    <property name="stateHelper" ref="hpCountryDmStateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="hpCountryDmSchedulingLauncher" class="eu.artofcoding.grownloader.SpringSchedulingLauncher">
+        <property name="job" ref="hpCountryDmJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="hpCountryDmSchedulingLauncher" method="launch" fixed-delay="86400000"/>
+    </task:scheduled-tasks>
+</beans>

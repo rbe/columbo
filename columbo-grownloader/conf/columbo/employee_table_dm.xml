@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                           http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch-2.1.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd">
+    <!--
+
+        EMPLOYEE_TABLE_DM.
+
+    -->
+    <!--
+        State helper.
+    -->
+    <bean id="employeeTableDmStateHelper" class="eu.artofcoding.grownloader.StateHelper">
+        <property name="tableName" value="employee_table_dm"/>
+        <property name="dataSource" ref="systemDataSource"/>
+    </bean>
+    <!--
+        Reader
+    -->
+    <bean id="employeeTableDmItemReader" class="org.springframework.batch.item.database.JdbcCursorItemReader">
+        <property name="dataSource" ref="columboSourceDataSource"/>
+        <property name="sql"
+                  value="SELECT employee_table_id, employee_id, location, login_name, region, response_center, date_added, date_modified, employee_phone, employee_email FROM employee_table_dm WHERE date_added BETWEEN ? AND ? OR date_modified BETWEEN ? AND ?"/>
+        <property name="preparedStatementSetter">
+            <bean id="table2DateModifiedStatementSetter"
+                  class="eu.artofcoding.grownloader.columbo.PairedDateStatementSetter">
+                <property name="stateHelper" ref="employeeTableDmStateHelper"/>
+            </bean>
+        </property>
+        <property name="rowMapper">
+            <bean id="employeeTableDmItemReaderRowMapper"
+                  class="eu.artofcoding.grownloader.columbo.entity.EmployeeTableDmRowMapper"/>
+        </property>
+        <property name="fetchSize" value="10000"/>
+    </bean>
+    <!--
+        Writer
+    -->
+    <bean id="employeeTableDmItemWriter" class="org.springframework.batch.item.database.JdbcBatchItemWriter">
+        <property name="dataSource" ref="columboDestinationDataSource"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+        <property name="sql"
+                  value="INSERT INTO stage1.employee_table_dm (employee_table_id, employee_id, location, login_name, region, response_center, date_added, date_modified, employee_phone, employee_email) VALUES (:employeeTableId, :employeeId, :location, :loginName, :region, :responseCenter, :dateAdded, :dateModified, :employeePhone, :employeeEmail)"/>
+    </bean>
+    <!--
+        Job
+    -->
+    <batch:job id="employeeTableDmJob" incrementer="dynamicJobParameters" restartable="true">
+        <batch:listeners>
+            <batch:listener ref="systemErrorExecutionLister"/>
+        </batch:listeners>
+        <!-- Create destination table -->
+        <batch:step id="employeeTableDmCreateDestinationTableStep" next="employeeTableDmReadAndWriteStep">
+            <batch:tasklet>
+                <bean id="employeeTableDmTableCreator" class="eu.artofcoding.grownloader.columbo.TableCreator">
+                    <property name="schemaName" value="stage1"/>
+                    <property name="tableName" value="employee_table_dm"/>
+                    <property name="procedureName" value="stage1.p_create_employee_table_dm"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Read data from source table and write to destination table (stage1) -->
+        <batch:step id="employeeTableDmReadAndWriteStep" next="employeeTableDmMergeDataStep">
+            <batch:tasklet>
+                <batch:chunk reader="employeeTableDmItemReader"
+                             writer="employeeTableDmItemWriter"
+                             commit-interval="10000"/>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Merge data from stage1 into stage2 -->
+        <batch:step id="employeeTableDmMergeDataStep" next="employeeTableDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="employeeTableDmMergeIntoStage2" class="eu.artofcoding.grownloader.columbo.Stage2Merger">
+                    <property name="tableName" value="employee_table_dm"/>
+                    <property name="procedureName" value="stage2.p_merge_all"/>
+                    <property name="dataSource" ref="columboDestinationDataSource"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+        <!-- Record successful download -->
+        <batch:step id="employeeTableDmRecordStateStep">
+            <batch:tasklet>
+                <bean id="employeeTableDmRecordState" class="eu.artofcoding.grownloader.DownloadStateRecorder">
+                    <property name="stateHelper" ref="employeeTableDmStateHelper"/>
+                </bean>
+            </batch:tasklet>
+        </batch:step>
+    </batch:job>
+    <!--
+        Scheduler
+    -->
+    <bean id="employeeTableDmSchedulingLauncher" class="eu.artofcoding.grownloader.SpringSchedulingLauncher">
+        <property name="job" ref="employeeTableDmJob"/>
+        <property name="jobLauncher" ref="jobLauncher"/>
+    </bean>
+    <task:scheduled-tasks>
+        <!-- Start job 'fixed-delay' seconds after completion of previous job. -->
+        <task:scheduled ref="employeeTableDmSchedulingLauncher" method="launch" fixed-delay="86400000"/>
+    </task:scheduled-tasks>
+</beans>
