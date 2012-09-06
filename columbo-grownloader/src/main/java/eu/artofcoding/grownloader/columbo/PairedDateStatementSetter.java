@@ -29,7 +29,7 @@ import java.util.Calendar;
  */
 public class PairedDateStatementSetter implements PreparedStatementSetter {
 
-    private static final Logger logger = LoggerFactory.getLogger(PairedDateStatementSetter.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(PairedDateStatementSetter.class);
 
     private StateHelper stateHelper;
 
@@ -49,7 +49,7 @@ public class PairedDateStatementSetter implements PreparedStatementSetter {
             ps.setDate(i, new java.sql.Date(dateFrom.getTimeInMillis()));
             ps.setDate(i + 1, new java.sql.Date(dateTo.getTimeInMillis()));
         }
-        logger.info(String.format("[" + stateHelper.getState().getTableName() + "] Set date to: between %s and %s", dateFrom.getTime(), dateTo.getTime()));
+        logger.info(String.format("[%s] Set date to: between %s and %s", stateEntity.getTableName(), dateFrom.getTime(), dateTo.getTime()));
     }
 
 }

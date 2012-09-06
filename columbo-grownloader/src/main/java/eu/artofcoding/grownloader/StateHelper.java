@@ -51,7 +51,6 @@ public class StateHelper {
     /**
      * Get state of downloads for this table.
      * As we calculate times (for use with BETWEEN ... AND ... queries), this method should be only called once.
-     *
      * @return
      */
     public StateEntity getState() {
@@ -70,7 +69,6 @@ public class StateHelper {
             Calendar dateTo = (Calendar) dateFrom.clone();
             dateTo.add(Calendar.HOUR_OF_DAY, download_hours);
             stateEntity.setDateTo(dateTo);
-            //
             return stateEntity;
         } catch (EmptyResultDataAccessException e) {
             throw new IllegalStateException("No information found in state table for " + tableName);
@@ -79,7 +77,6 @@ public class StateHelper {
 
     /**
      * Write new state of downlods of table in state table.
-     *
      * @return
      */
     public StateEntity nextState() {
