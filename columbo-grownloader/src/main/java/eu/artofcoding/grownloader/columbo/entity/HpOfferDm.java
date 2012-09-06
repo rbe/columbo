@@ -24,7 +24,7 @@ public class HpOfferDm implements Serializable {
 
     private Date endDate;
 
-    private Long offerRefId;
+    private BigDecimal offerRefId;
 
     private Long pkgRefId;
 
@@ -83,11 +83,11 @@ public class HpOfferDm implements Serializable {
         this.endDate = endDate;
     }
 
-    public Long getOfferRefId() {
+    public BigDecimal getOfferRefId() {
         return offerRefId;
     }
 
-    public void setOfferRefId(Long offerRefId) {
+    public void setOfferRefId(BigDecimal offerRefId) {
         this.offerRefId = offerRefId;
     }
 

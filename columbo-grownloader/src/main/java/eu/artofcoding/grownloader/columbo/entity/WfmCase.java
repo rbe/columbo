@@ -373,7 +373,7 @@ public class WfmCase implements Serializable {
 
     private Long m1bHwCount;
 
-    private Long selectedOfferId;
+    private BigDecimal selectedOfferId;
 
     private Long warrantyOfferId;
 
@@ -1881,11 +1881,11 @@ public class WfmCase implements Serializable {
         this.m1bHwCount = m1bHwCount;
     }
 
-    public Long getSelectedOfferId() {
+    public BigDecimal getSelectedOfferId() {
         return selectedOfferId;
     }
 
-    public void setSelectedOfferId(Long selectedOfferId) {
+    public void setSelectedOfferId(BigDecimal selectedOfferId) {
         this.selectedOfferId = selectedOfferId;
     }
 

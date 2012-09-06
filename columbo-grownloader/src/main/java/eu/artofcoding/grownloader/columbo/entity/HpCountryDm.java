@@ -13,14 +13,15 @@
 package eu.artofcoding.grownloader.columbo.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class HpCountryDm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long countryId;
+    private BigDecimal countryId;
 
-    private Long countryCode;
+    private BigDecimal countryCode;
 
     private Long dev;
 
@@ -37,23 +38,23 @@ public class HpCountryDm implements Serializable {
     public HpCountryDm() {
     }
 
-    public HpCountryDm(Long countryId) {
+    public HpCountryDm(BigDecimal countryId) {
         this.countryId = countryId;
     }
 
-    public Long getCountryId() {
+    public BigDecimal getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Long countryId) {
+    public void setCountryId(BigDecimal countryId) {
         this.countryId = countryId;
     }
 
-    public Long getCountryCode() {
+    public BigDecimal getCountryCode() {
         return countryCode;
     }
 
-    public void setCountryCode(Long countryCode) {
+    public void setCountryCode(BigDecimal countryCode) {
         this.countryCode = countryCode;
     }
 

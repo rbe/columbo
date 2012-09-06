@@ -46,7 +46,7 @@
             <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
         </property>
         <property name="sql"
-                  value="INSERT INTO stage1.hp_offer_dm (offer_id, end_date, offer_ref_id, start_date, date_modified) VALUES (:offerId, :endDate, :offerRef_id, :startDate, :dateModified)"/>
+                  value="INSERT INTO stage1.hp_offer_dm (offer_id, end_date, offer_ref_id, start_date, date_modified) VALUES (:offerId, :endDate, :offerRefId, :startDate, :dateModified)"/>
     </bean>
     <!--
         Job

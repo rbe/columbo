@@ -13,13 +13,14 @@
 package eu.artofcoding.grownloader.columbo.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class HpPartOrderDm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long hpPartOrderId;
+    private BigDecimal hpPartOrderId;
 
     private String subcaseId;
 
@@ -112,20 +113,20 @@ public class HpPartOrderDm implements Serializable {
     public HpPartOrderDm() {
     }
 
-    public HpPartOrderDm(Long hpPartOrderId) {
+    public HpPartOrderDm(BigDecimal hpPartOrderId) {
         this.hpPartOrderId = hpPartOrderId;
     }
 
-    public HpPartOrderDm(Long hpPartOrderId, String subcaseId) {
+    public HpPartOrderDm(BigDecimal hpPartOrderId, String subcaseId) {
         this.hpPartOrderId = hpPartOrderId;
         this.subcaseId = subcaseId;
     }
 
-    public Long getHpPartOrderId() {
+    public BigDecimal getHpPartOrderId() {
         return hpPartOrderId;
     }
 
-    public void setHpPartOrderId(Long hpPartOrderId) {
+    public void setHpPartOrderId(BigDecimal hpPartOrderId) {
         this.hpPartOrderId = hpPartOrderId;
     }
 

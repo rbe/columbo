@@ -21,6 +21,10 @@ public class HpPartsInfoDm implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String accountabilityId;
+
+    private String subcaseTrackingId;
+
     private String orderNumber;
 
     private String clfyUserLogin;
@@ -37,7 +41,7 @@ public class HpPartsInfoDm implements Serializable {
 
     private String currency;
 
-    private BigInteger listPrice;
+    private BigDecimal listPrice;
 
     private String sourceLocation;
 
@@ -73,7 +77,7 @@ public class HpPartsInfoDm implements Serializable {
 
     private String xPartStatus;
 
-    private Long xLineNumber;
+    private BigDecimal xLineNumber;
 
     private String xPartNotes;
 
@@ -87,7 +91,7 @@ public class HpPartsInfoDm implements Serializable {
 
     private Short xEscalatedFlag;
 
-    private Long xBillable;
+    private BigDecimal xBillable;
 
     private String xOfferPartNumber;
 
@@ -119,7 +123,7 @@ public class HpPartsInfoDm implements Serializable {
 
     private Date xLastModTime;
 
-    private Long xLogisticsLineNumber;
+    private BigDecimal xLogisticsLineNumber;
 
     private String xReconciliationResult;
 
@@ -133,11 +137,11 @@ public class HpPartsInfoDm implements Serializable {
 
     private String xRepairType;
 
-    private Long xPartQualification2user;
+    private BigDecimal xPartQualification2user;
 
-    private Long hpPartOrderId;
+    private BigDecimal hpPartOrderId;
 
-    private Long xPartSourced2user;
+    private BigDecimal xPartSourced2user;
 
     private String xPickPackInstructions;
 
@@ -164,6 +168,22 @@ public class HpPartsInfoDm implements Serializable {
     private BigInteger xCriticalForRepairFlag;
 
     public HpPartsInfoDm() {
+    }
+
+    public String getAccountabilityId() {
+        return accountabilityId;
+    }
+
+    public void setAccountabilityId(String accountabilityId) {
+        this.accountabilityId = accountabilityId;
+    }
+
+    public String getSubcaseTrackingId() {
+        return subcaseTrackingId;
+    }
+
+    public void setSubcaseTrackingId(String subcaseTrackingId) {
+        this.subcaseTrackingId = subcaseTrackingId;
     }
 
     public String getOrderNumber() {
@@ -230,11 +250,11 @@ public class HpPartsInfoDm implements Serializable {
         this.currency = currency;
     }
 
-    public BigInteger getListPrice() {
+    public BigDecimal getListPrice() {
         return listPrice;
     }
 
-    public void setListPrice(BigInteger listPrice) {
+    public void setListPrice(BigDecimal listPrice) {
         this.listPrice = listPrice;
     }
 
@@ -374,11 +394,11 @@ public class HpPartsInfoDm implements Serializable {
         this.xPartStatus = xPartStatus;
     }
 
-    public Long getXLineNumber() {
+    public BigDecimal getXLineNumber() {
         return xLineNumber;
     }
 
-    public void setXLineNumber(Long xLineNumber) {
+    public void setXLineNumber(BigDecimal xLineNumber) {
         this.xLineNumber = xLineNumber;
     }
 
@@ -430,11 +450,11 @@ public class HpPartsInfoDm implements Serializable {
         this.xEscalatedFlag = xEscalatedFlag;
     }
 
-    public Long getXBillable() {
+    public BigDecimal getXBillable() {
         return xBillable;
     }
 
-    public void setXBillable(Long xBillable) {
+    public void setXBillable(BigDecimal xBillable) {
         this.xBillable = xBillable;
     }
 
@@ -558,11 +578,11 @@ public class HpPartsInfoDm implements Serializable {
         this.xLastModTime = xLastModTime;
     }
 
-    public Long getXLogisticsLineNumber() {
+    public BigDecimal getXLogisticsLineNumber() {
         return xLogisticsLineNumber;
     }
 
-    public void setXLogisticsLineNumber(Long xLogisticsLineNumber) {
+    public void setXLogisticsLineNumber(BigDecimal xLogisticsLineNumber) {
         this.xLogisticsLineNumber = xLogisticsLineNumber;
     }
 
@@ -614,27 +634,27 @@ public class HpPartsInfoDm implements Serializable {
         this.xRepairType = xRepairType;
     }
 
-    public Long getXPartQualification2user() {
+    public BigDecimal getXPartQualification2user() {
         return xPartQualification2user;
     }
 
-    public void setXPartQualification2user(Long xPartQualification2user) {
+    public void setXPartQualification2user(BigDecimal xPartQualification2user) {
         this.xPartQualification2user = xPartQualification2user;
     }
 
-    public Long getHpPartOrderId() {
+    public BigDecimal getHpPartOrderId() {
         return hpPartOrderId;
     }
 
-    public void setHpPartOrderId(Long hpPartOrderId) {
+    public void setHpPartOrderId(BigDecimal hpPartOrderId) {
         this.hpPartOrderId = hpPartOrderId;
     }
 
-    public Long getXPartSourced2user() {
+    public BigDecimal getXPartSourced2user() {
         return xPartSourced2user;
     }
 
-    public void setXPartSourced2user(Long xPartSourced2user) {
+    public void setXPartSourced2user(BigDecimal xPartSourced2user) {
         this.xPartSourced2user = xPartSourced2user;
     }
 
