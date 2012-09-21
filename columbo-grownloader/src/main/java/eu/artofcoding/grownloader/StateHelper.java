@@ -69,6 +69,13 @@ public class StateHelper {
             Calendar dateTo = (Calendar) dateFrom.clone();
             dateTo.add(Calendar.HOUR_OF_DAY, download_hours);
             stateEntity.setDateTo(dateTo);
+            // Check it to-date is in the future
+            Calendar now = Calendar.getInstance();
+            if (dateTo.after(now)) {
+                dateTo = now;
+                stateEntity.setDateTo(dateTo);
+            } else {
+            }
             return stateEntity;
         } catch (EmptyResultDataAccessException e) {
             throw new IllegalStateException("No information found in state table for " + tableName);
