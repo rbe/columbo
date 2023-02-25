@@ -26,7 +26,7 @@
         <version.org.springframework.batch>2.1.8.RELEASE</version.org.springframework.batch>
         <!-- JDBC -->
         <version.org.apache.commons.dbcp>1.4</version.org.apache.commons.dbcp>
-        <version.com.mysql.jdbc>5.1.21</version.com.mysql.jdbc>
+        <version.com.mysql.jdbc>8.0.28</version.com.mysql.jdbc>
         <version.com.oracle.ojdbc6>11.2.0.3.0</version.com.oracle.ojdbc6>
         <version.sqlserver.jdbc>4.0</version.sqlserver.jdbc>
     </properties>
